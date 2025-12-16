@@ -1,0 +1,155 @@
+@startuml
+' MathParser core UML
+
+package "mathparser::core" {
+
+interface IExpression {
+  +virtual ~IExpression()
+  +virtual double Evaluate()
+}
+
+class FunctionExpression {
+  -ArgsType arg_
+  -double coef_
+  -std::shared_ptr<BaseFunction> meta_
+  +FunctionExpression(std::shared_ptr<BaseFunction>)
+  +double Evaluate()
+  +size_t argCount() const
+  +std::shared_ptr<FunctionExpression>& argAt(size_t)
+  +void ensureArgSize(size_t)
+  +double coef() const
+  +void setCoef(double)
+  +void setMeta(std::shared_ptr<BaseFunction>)
+}
+
+class BaseFunction {
+  -std::string name_
+  -char oper_
+  -size_t arg_number_
+  -int oper_index_
+  +virtual size_t getArgNumber() const
+  +virtual const std::string& getName() const
+  +virtual char getOperator() const
+  +virtual int getOperIndex() const
+  +virtual double evaluate(const ArgType&)
+  +virtual double evaluateImpl(const ArgType&) = 0
+}
+
+class AddFunction {
+  +double evaluateImpl(const ArgType&) const
+  +AddFunction()
+}
+class MultFunction {
+  +double evaluateImpl(const ArgType&) const
+  +MultFunction()
+}
+class DivFunction {
+  +double evaluateImpl(const ArgType&) const
+  +DivFunction()
+}
+class PowerFunction {
+  +double evaluateImpl(const ArgType&) const
+  +PowerFunction()
+}
+class SinFunction {
+  +double evaluateImpl(const ArgType&) const
+  +SinFunction()
+}
+class CosFunction {
+  +double evaluateImpl(const ArgType&) const
+  +CosFunction()
+}
+class BracketsFunction {
+  +double evaluateImpl(const ArgType&) const
+  +BracketsFunction()
+}
+class CoefFunction {
+  +double evaluateImpl(const ArgType&) const
+  +CoefFunction()
+}
+
+class FunctionMap {
+  -std::unordered_map<std::string,std::shared_ptr<BaseFunction>> map_by_name_
+  -std::unordered_map<char,std::shared_ptr<BaseFunction>> map_by_operator_
+  +FunctionMap()
+  +std::shared_ptr<BaseFunction>& getByName(const std::string&)
+  +std::shared_ptr<BaseFunction>& getByOperator(char)
+  +void addFunction(std::shared_ptr<BaseFunction>)
+}
+
+class ParserState {
+  -ParserContext& context_
+  +ParserState(ParserContext&)
+  +virtual void handle(char) = 0
+}
+
+class InitState {
+  +void handle(char)
+}
+class FuncState {
+  -std::string func_name_
+  +void handle(char)
+  +const std::string& getFuncName() const
+  +void setFuncName(const std::string&)
+}
+class CoefState {
+  -int decimal_
+  -std::shared_ptr<BaseFunction> coef_function_
+  -std::string func_name_
+  +void handle(char)
+}
+class TransState {
+  +TransState()
+  +void handle()
+}
+
+class ParserContext {
+  -std::stack<std::shared_ptr<FunctionExpression>> interpreter_stack_
+  -std::shared_ptr<FunctionMap> function_map_
+  -std::shared_ptr<FunctionExpression> cursor_
+  -ParserState* state_
+  -InitState init_state_
+  -FuncState funct_state_
+  -CoefState coef_state_
+  +ParserContext()
+  +void handle(char)
+  +std::shared_ptr<FunctionExpression> getCursor() const
+  +void setFunctionMap(std::shared_ptr<FunctionMap>)
+}
+
+class Parser {
+  -ParserContext parser_context_
+  -std::shared_ptr<FunctionExpression> func_expression_
+  +Parser()
+  +void buildExpression(const std::string&)
+  +double eval()
+}
+
+'Iheritance
+IExpression <|-- FunctionExpression
+BaseFunction <|-- AddFunction
+BaseFunction <|-- MultFunction
+BaseFunction <|-- DivFunction
+BaseFunction <|-- PowerFunction
+BaseFunction <|-- SinFunction
+BaseFunction <|-- CosFunction
+BaseFunction <|-- BracketsFunction
+BaseFunction <|-- CoefFunction
+ParserState <|-- InitState
+ParserState <|-- FuncState
+ParserState <|-- CoefState
+ParserState <|-- TransState
+
+'Associations
+FunctionExpression "1" *-- "0..*" FunctionExpression : args
+FunctionExpression "1" o-- "0..1" BaseFunction : meta_
+FunctionMap "1" o-- "0..*" BaseFunction : stored
+ParserContext "1" o-- "1" FunctionMap
+ParserContext "1" *-- "1" InitState
+ParserContext "1" *-- "1" FuncState
+ParserContext "1" *-- "1" CoefState
+ParserState "1" --> "1" ParserContext : context_
+Parser "1" *-- "1" ParserContext
+Parser "1" --> "0..1" FunctionExpression : func_expression_
+
+@enduml
