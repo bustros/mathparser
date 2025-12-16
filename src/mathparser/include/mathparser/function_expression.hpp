@@ -14,7 +14,7 @@ class FunctionExpression : public IExpression {
   explicit FunctionExpression(std::shared_ptr<BaseFunction>);
   FunctionExpression();
   ~FunctionExpression() override = default;
-  double Evaluate() override;
+  double evaluate() override;
 
   size_t argCount() const { return arg_.size(); }
   std::shared_ptr<FunctionExpression>& argAt(size_t i) { return arg_.at(i); }

@@ -9,7 +9,7 @@ class IExpression {
 
  public:
   virtual ~IExpression() = default;
-  virtual double Evaluate() = 0;
+  virtual double evaluate() = 0;
 
   IExpression(const IExpression&) = default;
   IExpression& operator=(const IExpression&) = default;

@@ -13,6 +13,6 @@ void Parser::buildExpression(const std::string& str) {
   parser_context_.handle(0);
 }
 
-double Parser::eval() { return func_expression_->Evaluate(); }
+double Parser::eval() { return func_expression_->evaluate(); }
 
 }  // namespace mp

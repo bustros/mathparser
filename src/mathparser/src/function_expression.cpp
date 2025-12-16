@@ -3,12 +3,12 @@
 #include "mathparser/base_function/base_function.hpp"
 
 namespace mp {
-double FunctionExpression::Evaluate() {
+double FunctionExpression::evaluate() {
   size_t a_nb = meta_->getArgNumber();
   if (a_nb) {
     std::vector<double> evaluated_args(a_nb);
     for (size_t i = 0; i < a_nb; ++i) {
-      evaluated_args[i] = arg_[i]->Evaluate();
+      evaluated_args[i] = arg_[i]->evaluate();
     }
     return coef_ * meta_->evaluate(evaluated_args);
   } else {
