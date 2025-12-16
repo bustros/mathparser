@@ -3,11 +3,15 @@
 #include <stdexcept>
 
 namespace mp {
+namespace {
+constexpr int kAddOperIndex = 10;
+}
+
 AddFunction::AddFunction() {
-  BaseFunction::name_ = "add";
-  BaseFunction::arg_number_ = 2;
-  BaseFunction::oper_ = '+';
-  BaseFunction::oper_index_ = 10;
+  setName("add");
+  setArgNumber(2);
+  setOperator('+');
+  setOperIndex(kAddOperIndex);
 }
 
 double AddFunction::evaluateImpl(const ArgType& arg) const { return arg[0] + arg[1]; }

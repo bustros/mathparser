@@ -10,20 +10,20 @@ void FuncState::handle(char it) {
     return;
   }
   if (it == '(') {
-    context.cursor_->setMeta(context.function_map_->getByName(func_name_));
+    context().cursor_->setMeta(context().function_map_->getByName(func_name_));
     func_name_ = "";
-    context.interpreter_stack_.push(context.cursor_);
-    context.cursor_ = context.cursor_->arg[0];
-    context.changeState(context.init_state_);
+    context().interpreter_stack_.push(context().cursor_);
+    context().cursor_ = context().cursor_->argAt(0);
+    context().changeState(context().init_state_);
   } else if (it == ')') {
-    context.popToFunc();
+    context().popToFunc();
   } else if (it == '-') {
-    context.newOperator('+');
-    context.cursor_->coef *= -1;
-    context.changeState(context.init_state_);
+    context().newOperator('+');
+    context().cursor_->setCoef(context().cursor_->coef() * -1);
+    context().changeState(context().init_state_);
   } else {
-    context.newOperator(it);
-    context.changeState(context.init_state_);
+    context().newOperator(it);
+    context().changeState(context().init_state_);
   }
 }
 

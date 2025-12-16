@@ -1,10 +1,7 @@
 #include "mathparser/base_function/coe_function.hpp"
 
 namespace mp {
-CoefFunction::CoefFunction() {
-  BaseFunction::name_ = "coef";
-  BaseFunction::arg_number_ = 0;
-}
+CoefFunction::CoefFunction() { setName("coef"); setArgNumber(0); }
 
-double CoefFunction::evaluateImpl(const ArgType& arg) const { return 1; }
+double CoefFunction::evaluateImpl(const ArgType& arg) const { return arg.empty() ? 1.0 : arg[0]; }
 }  // namespace mp

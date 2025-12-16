@@ -4,8 +4,8 @@
 
 namespace mp {
 BracketsFunction::BracketsFunction() {
-  BaseFunction::name_ = "()";
-  BaseFunction::arg_number_ = 1;
+  setName("()");
+  setArgNumber(1);
 }
 
 double BracketsFunction::evaluateImpl(const ArgType& arg) const { return arg[0]; }

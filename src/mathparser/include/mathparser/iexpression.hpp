@@ -5,11 +5,16 @@ namespace mp {
 
 class IExpression {
  protected:
-  IExpression() {}
+  IExpression() = default;
 
  public:
-  virtual ~IExpression() {}
+  virtual ~IExpression() = default;
   virtual double Evaluate() = 0;
+
+  IExpression(const IExpression&) = default;
+  IExpression& operator=(const IExpression&) = default;
+  IExpression(IExpression&&) = default;
+  IExpression& operator=(IExpression&&) = default;
 };
 }  // namespace mp
 #endif  // MATHPARSER_IEXPRESSION_HPP

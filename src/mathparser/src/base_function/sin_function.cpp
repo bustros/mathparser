@@ -4,8 +4,8 @@
 
 namespace mp {
 SinFunction::SinFunction() {
-  BaseFunction::name_ = "sin";
-  BaseFunction::arg_number_ = 1;
+  setName("sin");
+  setArgNumber(1);
 }
 
 double SinFunction::evaluateImpl(const ArgType& arg) const { return std::sin(arg[0]); }

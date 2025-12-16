@@ -4,8 +4,8 @@
 
 namespace mp {
 CosFunction::CosFunction() {
-  BaseFunction::name_ = "cos";
-  BaseFunction::arg_number_ = 1;
+  setName("cos");
+  setArgNumber(1);
 }
 
 double CosFunction::evaluateImpl(const ArgType& arg) const { return std::cos(arg[0]); }

@@ -8,7 +8,7 @@ class ParserContext;
 class InitState : public ParserState {
  public:
   using ParserState::ParserState;
-  void handle(char);
+  void handle(char) override;
 };
 }  // namespace mp
 

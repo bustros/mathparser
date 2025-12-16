@@ -11,7 +11,7 @@ class BaseFunction;
 class CoefState : public ParserState {
  public:
   using ParserState::ParserState;
-  void handle(char);
+  void handle(char) override;
 
  private:
   int decimal_ = 0;

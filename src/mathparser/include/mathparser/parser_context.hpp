@@ -16,12 +16,14 @@ class ParserContext {
  public:
   ParserContext();
   void handle(char);
+  std::shared_ptr<FunctionExpression> getCursor() const { return cursor_; }
+  void setFunctionMap(std::shared_ptr<FunctionMap> fm) { function_map_ = std::move(fm); }
 
+ private:
   std::stack<std::shared_ptr<FunctionExpression>> interpreter_stack_;
   std::shared_ptr<FunctionMap> function_map_;
   std::shared_ptr<FunctionExpression> cursor_;
 
- private:
   ParserState* state_{nullptr};
 
   void changeState(ParserState&);

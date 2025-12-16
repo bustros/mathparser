@@ -31,10 +31,10 @@ void ParserContext::newOperator(char it) {
       break;
     }
   }
-  *func->arg[0] = *cursor_;
+  *func->argAt(0) = *cursor_;
   *cursor_ = *func;
   interpreter_stack_.push(std::move(func));
-  cursor_ = cursor_->arg[1];
+  cursor_ = cursor_->argAt(1);
 }
 
 void ParserContext::popToFunc() {

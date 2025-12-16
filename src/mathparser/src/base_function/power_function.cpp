@@ -3,11 +3,15 @@
 #include <cmath>
 
 namespace mp {
+namespace {
+constexpr int kPowerOperIndex = 30;
+}
+
 PowerFunction::PowerFunction() {
-  BaseFunction::name_ = "pow";
-  BaseFunction::arg_number_ = 2;
-  BaseFunction::oper_ = '^';
-  BaseFunction::oper_index_ = 30;
+  setName("pow");
+  setArgNumber(2);
+  setOperator('^');
+  setOperIndex(kPowerOperIndex);
 }
 
 double PowerFunction::evaluateImpl(const ArgType& arg) const { return std::pow(arg[0], arg[1]); }

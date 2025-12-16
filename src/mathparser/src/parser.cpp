@@ -3,10 +3,10 @@
 #include <memory>
 namespace mp {
 
-Parser::Parser() { parser_context_.function_map_ = std::make_shared<FunctionMap>(); }
+Parser::Parser() { parser_context_.setFunctionMap(std::make_shared<FunctionMap>()); }
 
 void Parser::buildExpression(const std::string& str) {
-  func_expression_ = parser_context_.cursor_;
+  func_expression_ = parser_context_.getCursor();
   for (auto it : str) {
     parser_context_.handle(it);
   }
